@@ -1708,7 +1708,6 @@ function submitOrder() {
 }
 
 const calcRates = { mlbb: 255, ff: 180, pubg: 280, genshin: 220 };
-
 function calcUpdate() {
   const game = document.getElementById('calcGame').value;
   const diamond = parseInt(document.getElementById('calcDiamond').value) || 0;
@@ -1718,14 +1717,6 @@ function calcUpdate() {
   document.getElementById('calcResult').textContent = 'Rp ' + total.toLocaleString('id-ID');
 }
 
-function showMLBB() {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-mlbb').classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.nav-tab').classList.add('active');
-  window.scrollTo(0, 0);
-}
-
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1733,17 +1724,26 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+// OTORITAS PENCARIAN (Udah gue benerin class-nya)
 document.addEventListener('input', (e) => {
   if (e.target.id === 'gameSearch') {
     const filter = e.target.value.toLowerCase();
-    const cards = document.querySelectorAll('.game-card');
+    
+    // INI YANG DIUBAH: Sekarang nyari "popular-card" sesuai HTML lo
+    const cards = document.querySelectorAll('.popular-card'); 
+    
     cards.forEach(card => {
+      // Nyari teks di dalam class "game-name" (Joki Rank MLBB, dll)
       const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(filter) ? "" : "none";
+      
+      if (text.includes(filter)) {
+        card.style.display = ""; // Munculin
+      } else {
+        card.style.display = "none"; // Sembunyiin
+      }
     });
   }
 });
-
 </script>
 
 </body>
